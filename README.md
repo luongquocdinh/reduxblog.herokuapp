@@ -1,14 +1,11 @@
 # reduxblog.herokuapp
 
-### Step 1: 
-#### Import database
+### Step 1: Import database
 
-### Step 2:
-#### install module
+### Step 2: Install module
 > npm install
 
-### Step 3: 
-#### Run start
+### Step 3: Run start
 >	npm run start
 
 ### Test:
