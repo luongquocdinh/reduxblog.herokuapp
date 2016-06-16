@@ -1,67 +1,107 @@
 let express = require('express')
-let mysql	= require('mysql')
+// let mysql	= require('mysql')
 let bodyParser = require('body-parser')
+let Sequelize = require('sequelize')
+
+let sequelize = new Sequelize('reduxblog', 'root', 'dinh', {
+  dialect: 'mysql',
+  logging: false
+})
 let app = express()
 
 app.set('port', process.env.PORT || 3000)
-app.use(express.query())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'dinh',
-  database: 'reduxblog'
+sequelize.authenticate().then(function () {
+  console.log('Connect to Database successfully!')
+}).catch(function (err) {
+  console.log('Connect to Database fail!', err)
 })
 
-connection.connect()
+let connection = sequelize.define('connection', {
+  title: Sequelize.STRING,
+  categories: Sequelize.STRING,
+  content: Sequelize.STRING
+}, {
+  timestamps: false,
+  paranoid: true,
+  underscored: true,
+  freezeTableName: true,
+  tableName: 'posts'
+})
+
+let parse = function (dataJSON) {
+  let data = {
+    'id': dataJSON.id,
+    'title': dataJSON.title,
+    'categories': dataJSON.categories,
+    'content': dataJSON.content
+  }
+  return data
+}
 
 app.get('/', function (req, res) {
   res.send('Hello World!')
 })
 
 app.post('/api/posts/', function (req, res) {
-  let data = {
-    'title': req.body.title,
-    'categories': req.body.categories,
-    'content': req.body.content
-  }
-  connection.query('insert into posts set ?', data, function (err, rows, fields) {
-    if (!err) {
-      console.log('----Add success----', rows)
-    } else {
-      console.log('!!!Add fields!!!')
+  connection.sync().then(function () {
+    let connect = {
+      title: req.body.title,
+      categories: req.body.categories,
+      content: req.body.content
     }
+    console.log(connect.title)
+    connection.create(connect).then(function (data) {
+      if (data) {
+        console.log(data)
+        res.send(JSON.stringify(parse(data)))
+      } else {
+        console.log('insert fields')
+      }
+    })
   })
-  console.log(connection.sql)
-  res.send('Heroku API')
 })
 
 app.get('/api/posts', function (req, res) {
-  connection.query('select * from posts', function (err, result) {
-    if (err) throw err
-    console.log(result[0].id)
-    console.log(result[0].title)
-    console.log(result[0].categories)
-    console.log(result[0].content)
-    res.json(result)
+  connection.sync().then(function () {
+    connection.findAll({ attribute: ['id', 'title', 'categories'] }).then(function (data) {
+      if (data) {
+        // console.log(data)
+        res.json(data)
+        // res.send(JSON.stringify(parse(data)))
+      } else {
+        console.log('data null')
+      }
+    })
   })
 })
 
 app.get('/api/posts/:id', function (req, res) {
-  connection.query('select * from posts where id = ?', req.params.id, function (err, rows) {
-    if (err) throw console.log(err)
-    console.log('Data: ', rows)
-    res.json(rows)
+  connection.sync().then(function () {
+    connection.findOne({ where: {id: req.params.id} }).then(function (data) {
+      console.log(req.body.params)
+      if (data) {
+        res.json(data)
+      } else {
+        console.log('Search empty')
+      }
+    })
   })
 })
 
 app.delete('/api/posts/:id', function (req, res) {
-  connection.query('delete from posts where id = ?', req.params.id, function (err, rows) {
-    if (err) throw console.log(err)
-    console.log('Data: ', rows)
-    res.json(rows)
+  connection.sync().then(function () {
+    connection.destroy({ where: {id: req.params.id} }).then(function (data) {
+      console.log(req.body.params)
+      if (!data) {
+        console.log('data empty')
+      } else {
+        console.log('delete success')
+        res.json(data)
+      }
+    })
   })
 })
 

@@ -4,6 +4,9 @@ let boot = require('../bin/index').boot
 let shutdown = require('../bin/index').shutdown
 let port = require('../bin/index').port
 const ROOT_PATH = 'http://localhost:' + port
+const API_PATH = ROOT_PATH + '/api'
+const POST_PATH = API_PATH + '/posts'
+const ID_POST_PATH = API_PATH + '/posts' + '/2'
 describe('basic-node-serve', function () {
   before(function () {
     boot()
@@ -27,13 +30,13 @@ describe('basic-node-serve', function () {
       })
   })
 
-    it('respond all post', function(done){
+  it('respond all post', function(done){
     request
-      .get(POST_PATH)
+      .get(ROOT_PATH)
       .end(function(err, res){
         expect(res.status).to.equal(200)
         done()
-      })
+    })
   })
 
   it('respond new post', function(done){
@@ -55,19 +58,6 @@ describe('basic-node-serve', function () {
       .get(ID_POST_PATH)
       .end(function(err, res){
         expect(res.status).to.equal(200)
-        done()
-      })
-  })
-
-  it('respond update post', function(done){
-    request
-      .put(ID_POST_PATH)
-      .send({title: 'Test update', categories: 'Name update', content: 'country update'})
-      .end(function(err, res){
-        expect(res.status).to.equal(200)
-        expect(res.request._data.title).to.equal('Test update')
-        expect(res.request._data.categories).to.equal('Name update')
-        expect(res.request._data.content).to.equal('country update')
         done()
       })
   })

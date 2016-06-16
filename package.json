@@ -45,7 +45,8 @@
   "dependencies": {
     "express": "^4.13.4",
     "mysql": "^2.5.4",
-    "body-parser": "^1.15.1"
+    "body-parser": "^1.15.1",
+    "sequelize": "^3.23.3"
   },
   "pre-commit": [
     "lint",
