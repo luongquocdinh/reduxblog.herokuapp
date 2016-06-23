@@ -1,10 +1,13 @@
 let http = require('http')
 let app = require('../src/app')
+let models = require('../models')
 let server = http.createServer(app)
 
 var boot = function () {
-  server.listen(app.get('port'), function () {
-    console.info('Express server listening on port ' + app.get('port'))
+  models.sequelize.sync().then(function () {
+    server.listen(app.get('port'), function () {
+      console.info('Express server listening on port ' + app.get('port'))
+    })
   })
 }
 
