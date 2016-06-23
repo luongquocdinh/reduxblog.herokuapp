@@ -3,7 +3,7 @@
 	<p>Id: {{ item.id }}</p>
 	<p>Title: {{ item.title }}</p>
 	<p>Categories: {{ item.categories }}</p>
-	<input type="submit" ng-click="delPosts(item.id)" value="Delete">
+	<input type="button" ng-click="delPosts(item.id)" confirm-if="checked" confirm="Are you sure, {{name}}?" value="Delete">
 	<hr>
 </div>
 

@@ -33,15 +33,24 @@ function InputToken($scope, $http, $rootScope, $state) {
       $state.go('list', {'key' : $scope.token})
     })
   }
-  
-  $scope.delPosts = function () {
-    console.log('abc')
-  }
 }
 
-function ListCtrl($scope, $state) {
+function ListCtrl($scope, $state, $http, $rootScope) {
   $scope.addPosts = function () {
     $state.go('create', {'key' : $state.params.key})
+  }
+
+  $scope.delPosts = function (id) {
+    let message = 'Are you sure?'
+    if (message && confirm(message)) {
+      $http.delete('/api/posts/' + id, {headers: {'token' : $state.params.key}}).success(function (res) {
+        for(var i = 0; i < $rootScope.list.length; i++) {
+          if ($rootScope.list[i].id === id) {
+            $rootScope.list.splice(i, 1)
+          }
+        }
+      })
+    }
   }
 }
 
