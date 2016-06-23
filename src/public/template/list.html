@@ -1,0 +1,10 @@
+<h1>List Posts</h1>
+<div ng-repeat="item in list">
+	<p>Id: {{ item.id }}</p>
+	<p>Title: {{ item.title }}</p>
+	<p>Categories: {{ item.categories }}</p>
+	<input type="submit" ng-click="delPosts(item.id)" value="Delete">
+	<hr>
+</div>
+
+<input type="submit" value="Add Posts" ng-click="addPosts()">
