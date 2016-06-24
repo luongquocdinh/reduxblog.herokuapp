@@ -39,14 +39,16 @@
   },
   "standard": {
     "ignore": [
-      "test/**/*.js"
+      "test/**/*.js",
+      "src/public/**/*.js"
     ]
   },
   "dependencies": {
     "express": "^4.13.4",
     "mysql": "^2.5.4",
     "body-parser": "^1.15.1",
-    "sequelize": "^3.23.3"
+    "sha1": "^1.1.1",
+    "swig": "^1.4.2"
   },
   "pre-commit": [
     "lint",
