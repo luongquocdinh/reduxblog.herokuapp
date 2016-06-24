@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>title</title>
+    <link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="/public/js/lib/angular-ui-router.js"></script>
     <script src="/public/js/app.js"></script>
 </head>
 <body>
   <div ui-view>
-    <div ng-app="myApp">
-      <a href="#token">List</a>
+    <div ng-app="myApp" class="jumbotron">
+      <a href="#token"><h1>Input Token</h1></a>
+      <p>token to enter the blog</p>
     </div>
   </div>
 </body>

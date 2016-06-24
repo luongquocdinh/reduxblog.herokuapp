@@ -1,8 +1,20 @@
-<a ui-sref="index">Back to index</a>
-<h1> Edit Posts </h1>
-<form ng-submit="savePosts()">
-	Title: <input type="text" ng-model="title" placeholder="Title" required="required"> <br> <br>
-	Categories: <input type="text" ng-model="categories" placeholder="categories" required="required"> <br> <br>
-	Content <input type="text" ng-model="content" placeholder="content" required="required"> <br> <br>
-	<input type="submit" value="save">
+<ul class="pager">
+	<li><a ui-sref="index" class="previous pull-left"> <- Back </a></li>
+</ul><h1> Edit Posts </h1>
+<form ng-submit="savePosts()" class="container">
+	<div class="form-group">
+		<label>Title</label> 
+		<input type="text" class="form-control" ng-model="title" placeholder="Title" required="required">
+	</div>
+
+	<div class="form-group">
+	  <label>Categories</label> 
+		<input type="text" class="form-control" ng-model="categories" placeholder="categories" required="required">
+	</div>
+
+	<div class="form-group">
+		<label>Content</label> 
+		<input type="text" class="form-control" ng-model="content" placeholder="content" required="required">
+	</div>
+	<input type="submit" class="btn btn-success" value="save">
 </form>

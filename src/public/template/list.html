@@ -1,11 +1,20 @@
 <h1>List Posts</h1>
-<div ng-repeat="item in list">
-	<p>Id: {{ item.id }}</p>
-	<p>Title: {{ item.title }}</p>
-	<p>Categories: {{ item.categories }}</p>
-	<input type="button" ng-click="delPosts(item.id)" confirm-if="checked" confirm="Are you sure, {{name}}?" value="Delete">
-	<input type="button" ng-click="editPosts(item.id)" value="Edit">
-	<hr>
+<input type="submit" class="btn btn-success" value="Add Posts" ng-click="addPosts()">
+<div class="container">
+	<table class="table table-bordered table-striped">
+		<thead>
+			<td>Id</td>
+			<td>Title</td>
+			<td>Categories</td>
+		</thead>
+		<tbody ng-repeat="item in list">
+			<tr>
+				<td>{{ item.id }}</td>
+				<td>{{ item.title }}</td>
+				<td>{{ item.categories }}</td>
+				<td><input type="button" class="btn btn-danger" ng-click="delPosts(item.id)" confirm-if="checked" confirm="Are you sure, {{name}}?" value="Delete"></td>
+				<td><input type="button" class="btn btn-info" ng-click="editPosts(item.id)" value="Edit"></td>
+			</tr>
+		</tbody>
+	</table>
 </div>
-
-<input type="submit" value="Add Posts" ng-click="addPosts()">
