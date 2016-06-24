@@ -21,6 +21,11 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: 'public/template/list.html',
       controller: ListCtrl
     })
+    .state('edit', {
+      url: '/edit/:id?key',
+      templateUrl: 'public/template/edit.html',
+      controller: EditCtrl
+    })
     
 
   $urlRouterProvider.otherwise("index");
@@ -52,6 +57,10 @@ function ListCtrl($scope, $state, $http, $rootScope) {
       })
     }
   }
+
+  $scope.editPosts = function (id) {
+    $state.go('edit', {'key' : $state.params.key, 'id': id})
+  }
 }
 
 function AddPostCtrl($scope, $http, $rootScope, $state) {
@@ -68,5 +77,29 @@ function AddPostCtrl($scope, $http, $rootScope, $state) {
       $rootScope.list.push(res.post)
       $state.go('list', {'key' : $state.params.token})
     })
+  }
+}
+
+function EditCtrl($scope, $http, $rootScope, $state) {
+  $scope.savePosts = function () {
+    let data = {
+      'title': $scope.title,
+      'categories': $scope.categories,
+      'content': $scope.content
+    };
+
+    let idItem = $state.params.id
+       
+    $http.put('/api/posts/' + idItem, data,{headers: {'token' : $state.params.key}}).success(function (res) {
+      for(var i = 0; i < $rootScope.list.length; i++) {
+        if ($rootScope.list[i].id == idItem) {
+          $rootScope.list[i].title = $scope.title;
+          $rootScope.list[i].categories = $scope.categories,
+          $rootScope.list[i].content = $scope.content
+        }
+      }
+    })
+
+    $state.go('list', {'key' : $state.params.token})
   }
 }

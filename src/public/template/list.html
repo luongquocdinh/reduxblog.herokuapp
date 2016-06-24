@@ -4,6 +4,7 @@
 	<p>Title: {{ item.title }}</p>
 	<p>Categories: {{ item.categories }}</p>
 	<input type="button" ng-click="delPosts(item.id)" confirm-if="checked" confirm="Are you sure, {{name}}?" value="Delete">
+	<input type="button" ng-click="editPosts(item.id)" value="Edit">
 	<hr>
 </div>
 
