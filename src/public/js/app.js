@@ -81,6 +81,15 @@ function AddPostCtrl($scope, $http, $rootScope, $state) {
 }
 
 function EditCtrl($scope, $http, $rootScope, $state) {
+  let idItem = $state.params.id
+  for (var i = 0; i < $rootScope.list.length; i++) {
+    if ($rootScope.list[i].id == idItem) {
+      $scope.title = $rootScope.list[i].title
+      $scope.categories = $rootScope.list[i].categories
+      $scope.content = $rootScope.list[i].content
+    }
+  }
+
   $scope.savePosts = function () {
     let data = {
       'title': $scope.title,
@@ -88,13 +97,11 @@ function EditCtrl($scope, $http, $rootScope, $state) {
       'content': $scope.content
     };
 
-    let idItem = $state.params.id
-       
     $http.put('/api/posts/' + idItem, data,{headers: {'token' : $state.params.key}}).success(function (res) {
       for(var i = 0; i < $rootScope.list.length; i++) {
         if ($rootScope.list[i].id == idItem) {
           $rootScope.list[i].title = $scope.title;
-          $rootScope.list[i].categories = $scope.categories,
+          $rootScope.list[i].categories = $scope.categories
           $rootScope.list[i].content = $scope.content
         }
       }

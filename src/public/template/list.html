@@ -1,11 +1,14 @@
 <h1>List Posts</h1>
 <input type="submit" class="btn btn-success" value="Add Posts" ng-click="addPosts()">
-<div class="container">
+<hr>
+<div>
 	<table class="table table-bordered table-striped">
 		<thead>
 			<td>Id</td>
 			<td>Title</td>
 			<td>Categories</td>
+			<td>Delete</td>
+			<td>Edit</td>
 		</thead>
 		<tbody ng-repeat="item in list">
 			<tr>
