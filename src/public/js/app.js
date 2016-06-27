@@ -87,6 +87,7 @@ function EditCtrl($scope, $http, $rootScope, $state) {
       $scope.title = $rootScope.list[i].title
       $scope.categories = $rootScope.list[i].categories
       $scope.content = $rootScope.list[i].content
+      console.log($scope.content)
     }
   }
 
