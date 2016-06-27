@@ -16,10 +16,9 @@ router.get('/', function (req, res) {
   let token = req.headers.token
   models.users.find({where: {token: token}}).then(function (data) {
     if (data) {
-      // let userId = data.id
       models.posts.findAll({
         limit: 40,
-        attributes: ['id', 'title', 'categories']
+        attributes: ['id', 'title', 'categories', 'content']
       }).then(function (data) {
         if (data) {
           res.json(data)
