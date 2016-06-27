@@ -5,7 +5,7 @@ let server = http.createServer(app)
 
 var boot = function () {
   models.sequelize.sync().then(function () {
-    server.listen(app.get('port'), function () {
+    server.listen(app.get('port'), '0.0.0.0', function () {
       console.info('Express server listening on port ' + app.get('port'))
     })
   })
