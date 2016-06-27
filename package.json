@@ -4,6 +4,7 @@
   "description": "basic-node-serve",
   "main": "index.js",
   "scripts": {
+    "prod": "pm2 start bin/index.js"
     "prestart": "standard",
     "start": "nodemon bin/index.js",
     "standard": "standard",
