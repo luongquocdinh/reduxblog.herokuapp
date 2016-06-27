@@ -5,7 +5,7 @@ let routes = require('../router/index')
 let posts = require('../router/post')
 let app = express()
 
-app.set('port', process.env.PORT || 3000)
+app.set('port', process.env.PORT || 8787)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
