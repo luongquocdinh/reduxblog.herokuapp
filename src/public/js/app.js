@@ -46,16 +46,23 @@ function ListCtrl($scope, $state, $http, $rootScope) {
   }
 
   $scope.delPosts = function (id) {
-    let message = 'Are you sure?'
-    if (message && confirm(message)) {
-      $http.delete('/api/posts/' + id, {headers: {'token' : $state.params.key}}).success(function (res) {
-        for(var i = 0; i < $rootScope.list.length; i++) {
-          if ($rootScope.list[i].id === id) {
-            $rootScope.list.splice(i, 1)
+    console.log('here')
+    $.confirm ({
+      title: 'Are you sure!',
+      content: 'DELETE POSTS',
+      confirm: function() {
+        $http.delete('/api/posts/' + id, {headers: {'token' : $state.params.key}}).success(function (res) {
+          for(var i = 0; i < $rootScope.list.length; i++) {
+            if ($rootScope.list[i].id === id) {
+              $rootScope.list.splice(i, 1)
+            }
           }
-        }
-      })
-    }
+        })
+      },
+      cancel: function(){
+      }
+    });
+
   }
 
   $scope.editPosts = function (id) {
@@ -75,8 +82,12 @@ function AddPostCtrl($scope, $http, $rootScope, $state) {
 
     $http.post('/api/posts', data, {headers: {'token' : $state.params.key}}).success(function (res) {
       $rootScope.list.push(res.post)
-      $state.go('list', {'key' : $state.params.token})
     })
+    $state.go('list', {'key' : $state.params.key})
+  }
+
+  $scope.back = function () {
+    $state.go('list', {'key' : $state.params.key})
   }
 }
 
@@ -108,6 +119,10 @@ function EditCtrl($scope, $http, $rootScope, $state) {
       }
     })
 
-    $state.go('list', {'key' : $state.params.token})
+    $state.go('list', {'key' : $state.params.key})
+  }
+
+  $scope.back = function () {
+    $state.go('list', {'key' : $state.params.key})
   }
 }

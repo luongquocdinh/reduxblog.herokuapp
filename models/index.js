@@ -1,7 +1,7 @@
 let Sequelize = require('sequelize')
 let fs = require('fs')
 let path = require('path')
-let sequelize = new Sequelize('reduxblog', 'root', 'xuanthinh', {
+let sequelize = new Sequelize('reduxblog', 'root', 'dinh', {
   dialect: 'mysql',
   logging: false
 })
